@@ -1,5 +1,4 @@
 import { LOGO } from '@/config/constants';
-import React from 'react';
 import { Image, View } from 'react-native';
 import ProfileButton from './ProfileButton';
 import SearchButton from './SearchButton';

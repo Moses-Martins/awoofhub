@@ -1,5 +1,5 @@
+import { colors } from '@/styles/colors';
 import { Offer } from '@/types/offer';
-import React from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import OfferCard from './OfferCard';
 
@@ -15,7 +15,7 @@ export default function OfferInfiniteList({ offers, hasNextPage, fetchNextPage, 
 
     return (
         <FlatList
-            contentContainerClassName="gap-3 px-3 pb-10"
+            contentContainerClassName="gap-3 px-3"
             columnWrapperClassName="gap-3"
             data={offers}
             numColumns={2}
@@ -30,7 +30,7 @@ export default function OfferInfiniteList({ offers, hasNextPage, fetchNextPage, 
             ListFooterComponent={() => (
                 <View style={{ paddingVertical: 20, alignItems: "center" }}>
                     {isFetchingNextPage && (
-                        <ActivityIndicator size="large" />
+                        <ActivityIndicator size="large" color={colors.primary} />
                     )}
 
                     {!hasNextPage && offers.length > 0 && (

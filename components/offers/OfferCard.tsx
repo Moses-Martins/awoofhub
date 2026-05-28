@@ -42,12 +42,12 @@ export default function OfferCard({ offer }: Props) {
             ({offer.reviewCount})
           </Text>
         </View>
-        <Link href={`/${offer.id}`} asChild>
+        <Link href={`/offers/${offer.id}`} asChild>
         <TouchableOpacity
           activeOpacity={0.8}
           className="w-full bg-primary py-2 rounded-md items-center justify-center"
         >
-          <Text className="text-white font-bold font-mont-bold text-sm sm:text-base">
+          <Text className="text-white font-mont-bold text-sm sm:text-base">
             View More
           </Text>
         </TouchableOpacity>
