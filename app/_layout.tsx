@@ -2,6 +2,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
 import "../global.css";
 
@@ -45,10 +46,12 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <AppProvider>
-      <Stack>
-        <Stack.Screen name="(main)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      </Stack>
+      <PaperProvider>
+        <Stack>
+          <Stack.Screen name="(main)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        </Stack>
+      </PaperProvider>
     </AppProvider>
   );
 }

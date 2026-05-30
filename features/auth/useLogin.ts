@@ -21,7 +21,7 @@ export const useLogin = ({ onSuccess }: UseLoginOptions = {}) => {
   const { mutate: submit, isPending, isError, error } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      queryClient.setQueryData(['auth-user'], data);
+      queryClient.setQueryData(['auth-user'], data.user);
       onSuccess?.(data.user);
     },
   });

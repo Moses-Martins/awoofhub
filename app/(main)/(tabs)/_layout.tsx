@@ -1,3 +1,4 @@
+import { colors } from '@/styles/colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Foundation from '@expo/vector-icons/Foundation';
 import { Tabs } from 'expo-router';
@@ -9,38 +10,38 @@ export default function TabLayout() {
         headerShown: false, 
       }}>
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => (
-            <Foundation name="home" size={28} color={color} />
+          tabBarIcon: ({focused}) => (
+            <Foundation name="home" size={28} color={focused ? colors.primary : "gray"} />
           ),
         }}
       />
       <Tabs.Screen
-        name="(message)"
+        name="message"
         options={{
           title: 'Messages',
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="comments" size={28} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome name="comments" size={26} color={focused ? colors.primary : "gray"} />
           ),
         }}
       />
       <Tabs.Screen
-        name="(notification)"
+        name="notification"
         options={{
           title: 'Notifications',
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="bell" size={28} color={color} /> 
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome name="bell" size={24} color={focused ? colors.primary : "gray"} /> 
           ),
         }}
       />
       <Tabs.Screen
-        name="(wishlist)"
+        name="wishlist"
         options={{
           title: 'Wishlist',
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="heart" size={28} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome name="heart" size={24} color={focused ? colors.primary : "gray"} />
           ),
         }}
       />

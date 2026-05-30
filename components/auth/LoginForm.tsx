@@ -47,7 +47,6 @@ export default function LoginScreen({ onSuccess }: LoginFormProps) {
                 )}
             />
 
-
             <Controller
                 control={control}
                 name="password"

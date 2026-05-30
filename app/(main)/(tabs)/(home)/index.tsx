@@ -1,4 +1,3 @@
-import Header from '@/components/header/Header';
 import OfferInfiniteList from '@/components/offers/OfferInfiniteList';
 import OfferListSkeleton from '@/components/offers/OfferListSkeleton';
 import { useRandomInfiniteOffers } from '@/features/offers/useRandomInfiniteOffers';
@@ -20,9 +19,9 @@ export default function HomeScreen() {
         barStyle="dark-content"
         backgroundColor="white"
       />
-      <Header />
       
-      <View className="flex-1 pt-4">
+      
+      <View className="flex-1 mt-4">
         {isLoading && <OfferListSkeleton number={8} />}
 
         {!isLoading && !isFetching && allOffers.length === 0 && (

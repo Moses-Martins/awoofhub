@@ -5,7 +5,7 @@ export default function OfferIdScreen() {
   const { id } = useLocalSearchParams();
   return (
     <View>
-      <Text>Offer {id}</Text>
+      <Text>Offer is working now {id}</Text>
     </View>
   );
 }

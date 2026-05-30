@@ -19,6 +19,7 @@ export const InputField = forwardRef<TextInput, InputFieldProps>((props, ref) =>
     label,
     error,
     icon,
+    onBlur,
     placeholder,
     textAreaRows = 3,
     compulsory,
@@ -27,6 +28,7 @@ export const InputField = forwardRef<TextInput, InputFieldProps>((props, ref) =>
   } = props;
 
   const [showPassword, setShowPassword] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   const isPassword = type === 'password';
   const isEmail = type === 'email';
@@ -57,16 +59,24 @@ export const InputField = forwardRef<TextInput, InputFieldProps>((props, ref) =>
           secureTextEntry={isPassword && !showPassword}
           keyboardType={isEmail ? 'email-address' : 'default'}
           multiline={isTextArea}
+          onFocus={() => setFocused(true)}
+          onBlur={
+            (e) => {
+              setFocused(false);
+              onBlur?.(e);
+
+            }
+          }
           numberOfLines={isTextArea ? textAreaRows : 1}
           style={isTextArea ? { textAlignVertical: 'top' } : undefined} // Keep Android textarea aligned properly
           className={`flex-1 h-11 px-3 text-base text-slate-900 rounded-md font-baloo border
             ${icon && !isTextArea ? 'pl-11' : ''}
             ${isPassword ? 'pr-11' : ''}
             ${isTextArea ? 'h-auto py-3' : ''}
-            ${error?.message ? 'border-red-500' : 'border-orange-500'}
+            ${error?.message ? 'border-red-500' : focused ? 'border-orange-500' : 'border-slate-400'}
             ${className}`}
           {...inputProps}
-          
+
         />
 
         {isPassword && (
