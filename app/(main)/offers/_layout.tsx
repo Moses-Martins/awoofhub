@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 import { useState } from "react";
 
 
-export default function MainLayout() {
+export default function OfferLayout() {
   const [isSearchOpen, setIsSearchOpen] = useState(true);
   return (
     <Protected>

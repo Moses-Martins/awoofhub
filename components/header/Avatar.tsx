@@ -1,12 +1,15 @@
 import { useUser } from '@/features/user/useUser';
 import { capitalizeFirstLetter } from '@/utils/truncate';
-import { Image, Text, View } from 'react-native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from 'expo-router';
+import { Image, Pressable, Text, View } from 'react-native';
 
 export default function Avatar() {
     const { data: user } = useUser();
+    const navigation = useNavigation<DrawerNavigationProp<any>>();
 
     return (
-        <View>
+        <Pressable onPress={() => navigation.openDrawer()}>
             {user?.profileImageUrl ? (
                 <Image
                     source={{ uri: user.profileImageUrl }}
@@ -19,6 +22,6 @@ export default function Avatar() {
                     </Text>
                 </View>
             )}
-        </View>
+        </Pressable>
     );
 };

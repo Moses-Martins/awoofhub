@@ -34,7 +34,7 @@ export default function OfferCard({ offer }: Props) {
               fillColor={'#FFD700'}
               baseColor={'#ccd1d8'}
               spacing={0}
-              onChange={() => { }}
+              onChange={() => {}}
               disabled
             />
           </View>
