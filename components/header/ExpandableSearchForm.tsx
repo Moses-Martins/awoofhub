@@ -25,6 +25,9 @@ export default function ExpandableSearchForm({
         (term: string) => {
             if (term) {
                 router.setParams({ q: term });
+                if (!isOpen) {
+                    onOpen?.();
+                }
             } else {
                 router.setParams({ q: undefined });
             }

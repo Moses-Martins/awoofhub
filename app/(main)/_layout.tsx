@@ -1,4 +1,5 @@
 import Protected from "@/components/protected/Protected";
+import { SearchProvider } from "@/context/SearchContext";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
@@ -7,13 +8,15 @@ export default function MainLayout() {
 
   return (
     <Protected>
-      <StatusBar style="dark" />
-      <Stack>
-        <Stack.Screen name="offers" options={{ headerShown: false }} />
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="profile" options={{ headerShown: false }} />
-      </Stack>
+      <SearchProvider>
+        <StatusBar style="dark" />
+        <Stack>
+          <Stack.Screen name="offers" options={{ headerShown: false }} />
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="profile" options={{ headerShown: false }} />
+        </Stack>
+      </SearchProvider>
     </Protected>
   );
 }
