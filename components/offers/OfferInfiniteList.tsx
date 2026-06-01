@@ -15,8 +15,8 @@ export default function OfferInfiniteList({ offers, hasNextPage, fetchNextPage, 
 
     return (
         <FlatList
-            contentContainerClassName="gap-3 px-3"
             columnWrapperClassName="gap-3"
+            contentContainerClassName="gap-3 px-3"
             data={offers}
             numColumns={2}
             renderItem={({ item }) => (<OfferCard offer={item} />)}

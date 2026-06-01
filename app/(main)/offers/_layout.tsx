@@ -1,11 +1,10 @@
 import Header from "@/components/header/Header";
 import Protected from "@/components/protected/Protected";
 import { Stack } from "expo-router";
-import { useState } from "react";
 
 
 export default function OfferLayout() {
-  const [isSearchOpen, setIsSearchOpen] = useState(true);
+  
   return (
     <Protected>
       <Stack>
@@ -13,7 +12,7 @@ export default function OfferLayout() {
         <Stack.Screen
           name="index"
           options={{
-            header: () => <Header canGoBack={true} isSearchOpen={isSearchOpen} setIsSearchOpen={setIsSearchOpen} />
+            header: () => <Header isHome={false} />
           }}
         />
       </Stack>

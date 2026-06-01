@@ -3,7 +3,7 @@ import OfferListSkeleton from '@/components/offers/OfferListSkeleton';
 import { useOffers } from '@/features/offers/useOffers';
 import { useLocalSearchParams } from 'expo-router';
 import { useMemo } from 'react';
-import { StatusBar, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 export default function OffersScreen() {
     const { q } = useLocalSearchParams<{ q?: string }>();
@@ -23,12 +23,6 @@ export default function OffersScreen() {
 
     return (
         <View className="flex-1 bg-white">
-            <StatusBar
-                barStyle="dark-content"
-                backgroundColor="white"
-            />
-
-
             <View className="flex-1 pt-4">
                 {isLoading && <OfferListSkeleton number={8} />}
 

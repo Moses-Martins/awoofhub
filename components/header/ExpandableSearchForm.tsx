@@ -24,12 +24,9 @@ export default function ExpandableSearchForm({
     const handleChange = useCallback(
         (term: string) => {
             if (term) {
-                router.push({
-                    pathname: "/offers",
-                    params: { q: term },
-                });
+                router.setParams({ q: term });
             } else {
-                router.push("/offers");
+                router.setParams({ q: undefined });
             }
         },
         [router]
