@@ -16,11 +16,11 @@ export default function Header({ isHome = true }: HeaderProps) {
     const { isSearchOpen, closeSearch, openSearch } = useSearch();
 
     return (
-        <View className="px-5 bg-white flex-row h-14 justify-between items-center">
+        <View className="px-5 bg-white flex-row h-[65px] justify-between items-center">
             {isHome ? (
                 <Avatar />
             ) : (
-                <TouchableOpacity onPress={() => router.push("/")}>
+                <TouchableOpacity onPress={() => router.back()}>
                     <FontAwesome6 name="arrow-left" size={20} color="black" />
                 </TouchableOpacity>
             )}

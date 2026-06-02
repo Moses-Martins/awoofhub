@@ -1,7 +1,7 @@
+import { useFilter } from '@/features/offers/useFilter';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Fontisto from '@expo/vector-icons/Fontisto';
-import { useGlobalSearchParams, useRouter } from "expo-router";
-import { useCallback } from "react";
+import { useGlobalSearchParams } from "expo-router";
 import { TextInput, TouchableOpacity, View } from "react-native";
 
 interface Props {
@@ -19,21 +19,7 @@ export default function ExpandableSearchForm({
 }: Props) {
 
     const searchParams = useGlobalSearchParams();
-    const router = useRouter();
-
-    const handleChange = useCallback(
-        (term: string) => {
-            if (term) {
-                router.setParams({ q: term });
-                if (!isOpen) {
-                    onOpen?.();
-                }
-            } else {
-                router.setParams({ q: undefined });
-            }
-        },
-        [router]
-    );
+    const updateFilter = useFilter();
 
     if (isOverlay) {
         return (
@@ -41,7 +27,7 @@ export default function ExpandableSearchForm({
                 <TextInput
                     placeholder="Search for Offers"
                     value={searchParams.q?.toString() ?? ''}
-                    onChangeText={handleChange}
+                    onChangeText={(term) => updateFilter("q", term)}
                     className="flex-1 text-[16px] py-2"
                     autoFocus={isOpen}
                 />

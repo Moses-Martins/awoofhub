@@ -123,7 +123,7 @@ export default function TabBar({
       />
 
       <Animated.View
-        className="absolute bottom-2 h-1 rounded-xl bg-blue-600"
+        
         style={indicatorStyle}
       />
     </View>

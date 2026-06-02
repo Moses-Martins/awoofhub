@@ -1,37 +1,45 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useCallback } from 'react';
+import { useGlobalSearchParams, useRouter } from "expo-router";
+import { useCallback } from "react";
 
 type FilterValue = string | number | undefined | null;
+type FilterUpdate = string | Record<string, FilterValue>;
 
-export function useFilter(path: string) {
-    const params = useLocalSearchParams();
-    const router = useRouter();
+export function useFilter() {
+  const params = useGlobalSearchParams();
+  const router = useRouter();
 
-    const updateFilter = useCallback(
-        (keyOrUpdates: string | Record<string, FilterValue>, value?: FilterValue) => {
-            const nextParams: Record<string, any> = { ...params };
+  const updateFilter = useCallback(
+    (keyOrUpdates: FilterUpdate, value?: FilterValue) => {
+      const next: Record<string, string | undefined> = {};
 
-            if (typeof keyOrUpdates === 'string') {
-                if (value) nextParams[keyOrUpdates] = value;
-                else delete nextParams[keyOrUpdates];
-            } else {
-                Object.entries(keyOrUpdates).forEach(([k, v]) => {
-                    if (v) nextParams[k] = v;
-                    else delete nextParams[k];
-                });
-            }
+      // copy existing params
+      Object.entries(params).forEach(([k, v]) => {
+        if (typeof v === "string") {
+          next[k] = v;
+        }
+      });
 
-            delete nextParams.page;
+      const apply = (key: string, val: FilterValue) => {
+        if (val === undefined || val === null || val === "") {
+          next[key] = undefined;
+        } else {
+          next[key] = String(val);
+        }
+      };
 
-            const query = new URLSearchParams(nextParams as any).toString();
+      if (typeof keyOrUpdates === "string") {
+        apply(keyOrUpdates, value);
+      } else {
+        Object.entries(keyOrUpdates).forEach(([k, v]) => {
+          apply(k, v);
+        });
+      }
+      delete next.page;
 
-            router.replace({
-                pathname: path as any,
-                params: nextParams,
-            });
-        },
-        [params, router, path]
-    );
+      router.setParams(next);
+    },
+    [params, router]
+  );
 
-    return updateFilter;
+  return updateFilter;
 }

@@ -7,7 +7,7 @@ import { Offer } from '../../types/offer';
 type GetSearchOffersOptions = {
     search: string,
     category: string,
-    minRating: number,
+    minRating: string,
     createdFrom: string,
     createdTo: string,
     page?: number,
