@@ -51,27 +51,26 @@ const NotificationToast = ({
     <View
       className={`w-[300px] rounded-lg p-3 shadow-md ${notificationVariants[type]}`}
     >
-      <View className="flex-row justify-between items-start">
-        <View className="flex-1 pr-2">
-          <Text className="text-white text-base font-semibold">
+      <View className="flex-col justify-between items-start">
+        <View className="flex-row justify-between items-start w-full">
+          <Text className="text-white flex-1 text-base font-semibold">
             {title}!
           </Text>
 
-          {!!message && (
-            <Text className="text-white/80 text-sm mt-1">
-              {message}
+          <Pressable
+            onPress={() => onDismiss(id)}
+          >
+            <Text className="text-white text-base font-bold">
+              ✕
             </Text>
-          )}
+          </Pressable>
         </View>
 
-        <Pressable
-          onPress={() => onDismiss(id)}
-          className="ml-2"
-        >
-          <Text className="text-white text-lg font-bold">
-            ✕
+        {!!message && (
+          <Text className="text-white/80 text-sm mt-1">
+            {message}
           </Text>
-        </Pressable>
+        )}
       </View>
     </View>
   );

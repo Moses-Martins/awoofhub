@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 export default function LoginScreen() {
   const router = useRouter();
   const onSuccess = () => {
-    router.replace("/(main)/(tabs)");
+    router.replace("/(main)/(drawer)/(tabs)");
   }
 
   return <LoginForm onSuccess={onSuccess} />

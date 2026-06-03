@@ -3,8 +3,8 @@ import { useCategory } from '@/features/category/useCategory';
 import { useRef } from 'react';
 import { FlatList, LayoutChangeEvent, View } from 'react-native';
 import Animated, {
-    useAnimatedScrollHandler,
-    useSharedValue,
+  useAnimatedScrollHandler,
+  useSharedValue,
 } from 'react-native-reanimated';
 import SectionItem from './SectionItem';
 import TabBar from './TabBar';
@@ -90,7 +90,7 @@ export default function ScrollSyncTabBar() {
         keyExtractor={item => item.id.toString()}
         onScroll={onScrollHandler}
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="px-4 pb-12"
+        contentContainerClassName="pb-12"
       />
     </View>
   );

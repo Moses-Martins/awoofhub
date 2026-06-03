@@ -69,10 +69,10 @@ export const InputField = forwardRef<TextInput, InputFieldProps>((props, ref) =>
           }
           numberOfLines={isTextArea ? textAreaRows : 1}
           style={isTextArea ? { textAlignVertical: 'top' } : undefined} // Keep Android textarea aligned properly
-          className={`flex-1 h-11 px-3 text-base text-slate-900 rounded-md font-baloo border
+          className={`flex-1 px-3 text-base text-slate-900 rounded-md font-baloo border
+            ${isTextArea ? 'h-auto py-3' : ''} 
             ${icon && !isTextArea ? 'pl-11' : ''}
             ${isPassword ? 'pr-11' : ''}
-            ${isTextArea ? 'h-auto py-3' : ''}
             ${error?.message ? 'border-red-500' : focused ? 'border-orange-500' : 'border-slate-400'}
             ${className}`}
           {...inputProps}

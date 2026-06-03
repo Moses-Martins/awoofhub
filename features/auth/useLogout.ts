@@ -1,9 +1,12 @@
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logoutService } from "../../services/auth-service";
 
 export const logout = async (): Promise<{}> => {
   const result = await logoutService();
+  await AsyncStorage.removeItem('accessToken');
+  await AsyncStorage.removeItem('refreshToken');
   return result.data;
 };
 

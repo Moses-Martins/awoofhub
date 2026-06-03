@@ -47,7 +47,7 @@ export default function OffersScreen() {
             <View className="py-2.5 bg-white flex-row justify-between items-center py-2 px-5" style={{ shadowColor: '#000', shadowOffset: { width: 1, height: 3 }, shadowOpacity: 0.1, elevation: 5 }}>
                 <TouchableOpacity className="flex-row items-center" onPress={() => actionSheetRef.current?.show()}>
                     <Ionicons name="filter" size={22} color="black" />
-                    <Text className="text-[14px] mx-4 flex-1 font-semibold text-black">
+                    <Text className="text-[14px] mx-4 font-semibold text-black">
                         Filters
                     </Text>
                 </TouchableOpacity>
