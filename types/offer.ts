@@ -33,6 +33,7 @@ export interface Offer {
   business: {
     id: string;
     name: string;
+    profileImageUrl: string | null;
   };
   category: {
     id: string;

@@ -1,10 +1,10 @@
-import { apiClient } from "../lib/apiClient";
-import { ApiResponse } from "../types/api-response";
-import { Comment, commentData } from "../types/comment";
+import { apiClient } from "@/lib/apiClient";
+import { ApiResponse } from "@/types/api-response";
+import { Comment, commentData } from "@/types/comment";
 
 
 async function writeComment(id: string, payload: commentData): Promise<ApiResponse<Comment>> {
-  const res: ApiResponse<Comment> = await apiClient.post(`/comments/${id}`, payload)
+  const res: ApiResponse<Comment> = await apiClient.post(`/comments/offer/${id}`, payload)
 
   return res;
 }
@@ -21,4 +21,3 @@ const CommentService = {
 };
 
 export default CommentService;
-

@@ -8,7 +8,7 @@ export default function OfferLayout() {
   return (
     <Protected>
       <Stack>
-        <Stack.Screen name="[id]" options={{ headerTitle: "Offer Details" }} />
+        <Stack.Screen name="[id]" options={{ headerTitle: "Offer Detail" }} />
         <Stack.Screen
           name="index"
           options={{

@@ -22,7 +22,7 @@ export default function OffersScreen() {
         createdTo?: string;
     }>();
 
-    const { data: categories } = useCategory();
+    const { data: categories, isFetching: isCategoryFetching } = useCategory();
     const updateFilter = useFilter();
     const actionSheetRef = useRef<ActionSheetRef>(null);
 
@@ -41,6 +41,12 @@ export default function OffersScreen() {
     const allOffers = useMemo(() => {
         return data?.pages.flatMap((page) => page.data) ?? [];
     }, [data]);
+
+    if (isCategoryFetching) {
+        return <OfferListSkeleton number={8} />
+    }
+
+
 
     return (
         <View className="flex-1 bg-white">
