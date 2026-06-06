@@ -1,9 +1,11 @@
+import { useUser } from "@/features/user/useUser";
 import { Href, useNavigationContainerRef, useRouter } from "expo-router";
 import { DrawerActions } from "expo-router/build/react-navigation";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function CustomDrawerContent() {
     const router = useRouter();
+    const { data: user } = useUser();
     const rootNavRef = useNavigationContainerRef();
 
     const navigate = (href: Href) => {
@@ -27,7 +29,7 @@ export default function CustomDrawerContent() {
             </Text>
 
             <View className="gap-4 px-5">
-                <Pressable onPress={() => navigate("/profile")} className="py-3">
+                <Pressable onPress={() => navigate(`/profile/${user.id}`)} className="py-3">
                     <Text className="text-lg">Profile</Text>
                 </Pressable>
 

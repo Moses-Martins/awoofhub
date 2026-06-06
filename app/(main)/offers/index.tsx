@@ -7,7 +7,7 @@ import { useOffers } from '@/features/offers/useOffers';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import dayjs from "dayjs";
 import { useLocalSearchParams } from 'expo-router';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ActionSheetRef } from 'react-native-actions-sheet';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -38,15 +38,11 @@ export default function OffersScreen() {
         limit: 8,
     });
 
-    const allOffers = useMemo(() => {
-        return data?.pages.flatMap((page) => page.data) ?? [];
-    }, [data]);
+    const allOffers = data?.pages.flatMap((page) => page.data) ?? [];
 
     if (isCategoryFetching) {
         return <OfferListSkeleton number={8} />
     }
-
-
 
     return (
         <View className="flex-1 bg-white">
