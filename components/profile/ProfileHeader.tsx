@@ -3,7 +3,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { router } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
-import Tabs from "./Tabs";
 
 
 interface Props {
@@ -68,7 +67,6 @@ export default function ProfileHeader({ isOwnProfile, profile, }: Props) {
                                 <Text>Add profle action button</Text>
                             )}
                         </View>
-                        <Tabs />
                     </View>
                 </View>
             </View>
