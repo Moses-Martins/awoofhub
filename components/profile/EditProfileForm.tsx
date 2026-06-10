@@ -1,14 +1,13 @@
-import { Lock, Mail } from "lucide-react-native";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
-import { launchImageLibrary } from "react-native-image-picker";
-
 import { useUploadSinglePhoto } from "@/features/upload/useUpdateProfilePhoto";
 import { useUpdateUser } from "@/features/user/useUpdateUser";
 import { useUser } from "@/features/user/useUser";
 import { notificationsStore } from "@/store/notifications/notifications";
-import { capitalizeFirstLetter } from "@/utils/truncate";
+import { Feather } from '@expo/vector-icons';
+import * as ImagePicker from "expo-image-picker";
+import { Lock, Mail } from "lucide-react-native";
+import { useEffect, useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { ActivityIndicator, ImageBackground, Pressable, Text, View } from "react-native";
 
 import { EditProfileFormProps } from "@/types/form-props";
 import { GoogleInputField } from "../form/AutoComplete";
@@ -26,38 +25,65 @@ export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
         },
     });
 
-    const photoUrl = watch("profileImageUrl");
+    const hasUserEditedAddress = useRef(false);
+
+    const imageUri = watch("profileImageUrl");
 
     const handlePhotoUpload = async () => {
-        const result = await launchImageLibrary({
-            mediaType: "photo",
-            quality: 0.8,
-        });
-
-        const asset = result.assets?.[0];
-        if (!asset?.uri) return;
-
+        if (isUploading) return;
         try {
+            // 1. Ask permission
+            const permission =
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+            if (!permission.granted) {
+                notificationsStore.getState().showNotification({
+                    type: "error",
+                    title: "Permission required",
+                    message: "Allow access to photos to continue",
+                });
+                return;
+            }
+
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 0.8,
+            });
+
+            if (result.canceled) return;
+
+            const asset = result.assets?.[0];
+            if (!asset?.uri) return;
+
             const file = {
                 uri: asset.uri,
-                type: asset.type,
-                name: asset.fileName,
+                name: asset.fileName ?? `photo_${Date.now()}.jpg`,
+                type: asset.mimeType ?? "image/jpeg",
             };
 
             const res = await uploadPhoto(file);
             setValue("profileImageUrl", res.data);
+
         } catch (err: any) {
+            console.error("Upload error:", err);
+
+            // rollback image if upload fails
+            setValue("profileImageUrl", watch("profileImageUrl") || "");
+
             notificationsStore.getState().showNotification({
                 type: "error",
-                title: "Error",
-                duration: 5000,
-                message: err?.message || "Something went wrong",
+                title: "Upload failed",
+                message: err?.message || "Please try again",
             });
         }
     };
 
     const onSubmit = (data: any) => {
-        updateUser.submit(data);
+        const { addressPlaceId, ...submitData } = data;
+
+        updateUser.submit(submitData);
     };
 
     useEffect(() => {
@@ -67,6 +93,7 @@ export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
                 bio: currentUser.bio || "",
                 website: currentUser.website || "",
                 address: currentUser.address || "",
+                addressPlaceId: "",
                 profileImageUrl: currentUser.profileImageUrl || "",
             });
         }
@@ -75,33 +102,48 @@ export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
     return (
         <View className="flex-1 px-5 py-6">
 
-            {/* PROFILE IMAGE */}
             <View className="items-center mb-6">
-                <View className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 items-center justify-center border-4 border-gray-300">
-                    {photoUrl ? (
-                        <Image source={{ uri: photoUrl }} className="w-full h-full" />
-                    ) : (
-                        <View className="w-full h-full bg-green-500 items-center justify-center">
-                            <Text className="text-white text-3xl font-bold">
-                                {capitalizeFirstLetter(currentUser?.name || "User")}
-                            </Text>
-                        </View>
+                <View className="relative w-28 h-28">
+                    <View className="w-full h-full rounded-full overflow-hidden border-4 border-gray-300 bg-gray-200">
+                        {imageUri ? (
+                            <ImageBackground
+                                source={{ uri: imageUri }}
+                                className="w-full h-full"
+                            >
+                                <View className="absolute inset-0 bg-black/30" />
+
+                                <Pressable
+                                    onPress={handlePhotoUpload}
+                                    className="flex-1 items-center justify-center"
+                                >
+                                    <Feather name="edit-2" size={18} color="white" />
+                                </Pressable>
+                            </ImageBackground>
+                        ) : (
+                            <View className="w-full h-full items-center justify-center bg-gray-300">
+                                <Feather name="user" size={40} color="gray" />
+                            </View>
+                        )}
+
+                        {isUploading && (
+                            <View className="absolute inset-0 items-center justify-center bg-black/40">
+                                <ActivityIndicator color="#fff" />
+                            </View>
+                        )}
+                    </View>
+
+                    {!imageUri && (
+                        <Pressable
+                            onPress={handlePhotoUpload}
+                            className="absolute bottom-0 right-0 bg-black p-2.5 rounded-full z-10 shadow-sm"
+                        >
+                            <Feather name="camera" size={14} color="white" />
+                        </Pressable>
                     )}
                 </View>
 
-                <Pressable
-                    onPress={handlePhotoUpload}
-                    className="absolute bottom-0 right-[40%] bg-black p-3 rounded-full"
-                >
-                    {isUploading ? (
-                        <ActivityIndicator color="#fff" />
-                    ) : (
-                        <Text className="text-white">📷</Text>
-                    )}
-                </Pressable>
-
                 <Text className="text-xs text-gray-500 mt-2">
-                    Click camera to update photo
+                    Tap to change photo
                 </Text>
             </View>
 
@@ -176,12 +218,12 @@ export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
                     name="address"
                     rules={{
                         validate: (value) => {
-                            const placeId = watch("addressPlaceId");
-
                             if (!value?.trim()) return true;
 
-                            return !!placeId || "Please select a location from suggestions";
-                        },
+                            if (!hasUserEditedAddress.current) return true;
+
+                            return !!watch("addressPlaceId") || "Please select a location from suggestions";
+                        }
                     }}
                     render={({ field, fieldState }) => (
                         <GoogleInputField
@@ -189,9 +231,9 @@ export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
                             value={field.value}
                             error={fieldState.error}
                             onChangeText={(text: string) => {
-                                field.onChange(text);
+                                hasUserEditedAddress.current = true;
 
-                                // user typed manually
+                                field.onChange(text);
                                 setValue("addressPlaceId", "");
                             }}
                             onPlaceSelect={(place) => {

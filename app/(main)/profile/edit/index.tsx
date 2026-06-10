@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 export default function EditScreen() {
     const router = useRouter();
     const onSuccess = () => {
-        router.replace("/profile/");
+        router.back();
     }
 
     return <EditProfileForm onSuccess={onSuccess} />
