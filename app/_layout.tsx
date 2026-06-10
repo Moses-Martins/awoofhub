@@ -8,6 +8,8 @@ import "../global.css";
 
 import AppProvider from '@/providers/app-provider';
 import { FONTS } from '@/styles/fonts';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,12 +48,20 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <AppProvider>
-      <PaperProvider>
-        <Stack>
-          <Stack.Screen name="(main)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        </Stack>
-      </PaperProvider>
+      <SafeAreaProvider>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
+          style={{ flex: 1 }}
+        >
+          <PaperProvider>
+            <Stack>
+              <Stack.Screen name="(main)" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            </Stack>
+          </PaperProvider>
+        </KeyboardAvoidingView>
+      </SafeAreaProvider>
     </AppProvider>
   );
 }

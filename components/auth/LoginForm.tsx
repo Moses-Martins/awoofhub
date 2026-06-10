@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from "react-native";
 import { InputField } from "../form/InputField";
 
-export default function LoginScreen({ onSuccess }: LoginFormProps) {
+export default function LoginForm({ onSuccess }: LoginFormProps) {
     const login = useLogin({ onSuccess });
     const { handleSubmit, control } = useForm<LoginData>({
         defaultValues: {
@@ -19,9 +19,9 @@ export default function LoginScreen({ onSuccess }: LoginFormProps) {
         login.submit(data);
     };
 
-
     return (
         <View>
+            
             <Controller
                 control={control}
                 name="email"

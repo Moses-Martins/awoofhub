@@ -1,16 +1,15 @@
 import Loading from '@/components/loading/Loading';
-import ProfileHeader from '@/components/profile/ProfileHeader';
-import { useUser } from '@/features/user/useUser';
-import { useUserById } from '@/features/user/useUserById';
-import { useLocalSearchParams } from 'expo-router';
-import { ActivityIndicator, Text, View } from 'react-native';
-import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
-
 import OfferCard from '@/components/offers/OfferCard';
 import OfferListSkeleton from '@/components/offers/OfferListSkeleton';
+import { About } from '@/components/profile/About';
+import ProfileHeader from '@/components/profile/ProfileHeader';
 import { useOffersByUser } from '@/features/offers/useoffersByUser';
+import { useUser } from '@/features/user/useUser';
+import { useUserById } from '@/features/user/useUserById';
 import { colors } from '@/styles/colors';
-import { Dimensions } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { ActivityIndicator, Dimensions, Text, View } from 'react-native';
+import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
 
 const screenWidth = Dimensions.get('window').width;
 const tabCount = 2;
@@ -62,15 +61,26 @@ export default function ProfileScreen() {
             renderTabBar={(props) => (
                 <MaterialTabBar
                     {...props}
+                    getLabelText={(name) => {
+                        const str = String(name).toLowerCase();
+                        return str.charAt(0).toUpperCase() + str.slice(1);
+                    }}
                     labelStyle={{
                         margin: 0,
                         paddingBottom: 4,
+                        textTransform: 'none',
                         paddingTop: 15,
                         textAlign: 'center',
                         width: screenWidth / tabCount,
                     }}
                 />
             )}>
+
+            <Tabs.Tab name="Profile">
+                <Tabs.ScrollView>
+                    <About profile={user} />
+                </Tabs.ScrollView>
+            </Tabs.Tab>
 
             <Tabs.Tab name="Offers">
                 <Tabs.FlatList
@@ -120,13 +130,6 @@ export default function ProfileScreen() {
                     }}
                 />
             </Tabs.Tab>
-
-            <Tabs.Tab name="Profile">
-                <Tabs.ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-                    <Text className="text-gray-500 text-center">This is the profile screen</Text>
-                </Tabs.ScrollView>
-            </Tabs.Tab>
-
         </Tabs.Container>
     );
 };
