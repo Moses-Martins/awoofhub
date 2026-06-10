@@ -14,7 +14,7 @@ export const getActivity = ({ page = 1, limit }: GetActivityOptions): Promise<Ap
 };
 
 export const useActivity = ({ limit = 6 }: GetActivityOptions) => {
-    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, isError, error } = useInfiniteQuery({
+    const { data, fetchNextPage, isLoading, hasNextPage, isFetching, isFetchingNextPage, isError, error } = useInfiniteQuery({
         queryKey: ['notifications'],
         queryFn: ({ pageParam = 1 }) => getActivity({ page: pageParam, limit }),
 
@@ -33,6 +33,7 @@ export const useActivity = ({ limit = 6 }: GetActivityOptions) => {
     return {
         data,
         fetchNextPage,
+        isLoading,
         hasNextPage,
         isFetching,
         isFetchingNextPage,

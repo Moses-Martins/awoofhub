@@ -20,8 +20,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     };
 
     return (
-        <View>
-            
+        <View> 
             <Controller
                 control={control}
                 name="email"

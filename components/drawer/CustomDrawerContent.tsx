@@ -1,3 +1,4 @@
+import { useLogout } from "@/features/auth/useLogout";
 import { useUser } from "@/features/user/useUser";
 import { Href, useNavigationContainerRef, useRouter } from "expo-router";
 import { DrawerActions } from "expo-router/build/react-navigation";
@@ -14,6 +15,15 @@ export default function CustomDrawerContent() {
         }
         router.push(href);
     };
+
+    const { submit: logout } = useLogout({
+        onSuccess: () => {
+            if (rootNavRef.isReady()) {
+                rootNavRef.dispatch(DrawerActions.closeDrawer());
+            }
+            router.replace('/login');
+        },
+    });
 
     return (
         <ScrollView
@@ -37,7 +47,7 @@ export default function CustomDrawerContent() {
                     <Text className="text-lg">Help & Support</Text>
                 </Pressable>
 
-                <Pressable onPress={() => navigate("/")} className="py-3 active:opacity-60">
+                <Pressable onPress={() => logout()} className="py-3 active:opacity-60">
                     <Text className="text-lg text-red-500">Logout</Text>
                 </Pressable>
             </View>
