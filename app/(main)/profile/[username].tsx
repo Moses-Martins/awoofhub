@@ -3,9 +3,9 @@ import OfferCard from '@/components/offers/OfferCard';
 import OfferListSkeleton from '@/components/offers/OfferListSkeleton';
 import { About } from '@/components/profile/About';
 import ProfileHeader from '@/components/profile/ProfileHeader';
-import { useOffersByUser } from '@/features/offers/useoffersByUser';
+import { useOffersByUsername } from '@/features/offers/useOffersByUsername';
 import { useUser } from '@/features/user/useUser';
-import { useUserById } from '@/features/user/useUserById';
+import { useUserByUsername } from '@/features/user/useUserByUsername';
 import { colors } from '@/styles/colors';
 import { useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, Dimensions, Text, View } from 'react-native';
@@ -18,15 +18,15 @@ const HEADER_SPACE = 70;
 
 export default function ProfileScreen() {
 
-    const { id: rawId } = useLocalSearchParams();
-    const id = Array.isArray(rawId) ? rawId[0] : rawId;
+    const { username: rawUsername } = useLocalSearchParams();
+    const username = Array.isArray(rawUsername) ? rawUsername[0] : rawUsername;
 
 
     const { data: currentUser } = useUser();
-    const { data: user, isLoading: isUserLoading } = useUserById({ id });
+    const { data: user, isLoading: isUserLoading } = useUserByUsername({ username });
 
-    const { data, isFetching, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage, isError, error } = useOffersByUser({
-        userId: id, search: "", category: "", minRating: 0, createdFrom: "", createdTo: "", limit: 8
+    const { data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useOffersByUsername({
+        username, search: "", category: "", minRating: 0, createdFrom: "", createdTo: "", limit: 8
     });
 
     const allOffers = data?.pages.flatMap((page) => page.data) ?? [];
@@ -108,7 +108,7 @@ export default function ProfileScreen() {
                     )}
 
                     ListEmptyComponent={() => {
-                        if (isLoading) {
+                        if (isFetching) {
                             return (
                                 <View style={{ paddingTop: HEADER_SPACE }}>
                                     <OfferListSkeleton number={8} />

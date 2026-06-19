@@ -32,7 +32,6 @@ export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
     const handlePhotoUpload = async () => {
         if (isUploading) return;
         try {
-            // 1. Ask permission
             const permission =
                 await ImagePicker.requestMediaLibraryPermissionsAsync();
 
