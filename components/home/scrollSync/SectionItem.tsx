@@ -1,6 +1,6 @@
 import Loading from '@/components/loading/Loading';
 import OfferList from '@/components/offers/OfferList';
-import { useOffersByCategory } from '@/features/offers/useOffersByCategory';
+import { useOffers } from '@/features/offers/useOffers';
 import { Feather } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { LayoutChangeEvent, Pressable, Text, View } from 'react-native';
@@ -13,11 +13,16 @@ interface Props {
 
 export default function SectionItem({ item, onLayout, index }: Props) {
 
-    const { data: offers = [], isFetching } = useOffersByCategory({
-        categoryId: item.id,
-        page: 1,
+    const { data, isFetching } = useOffers({
+        search: "",
+        category: item.slug ?? "",
+        minRating: 0,
+        createdFrom: "",
+        createdTo: "",
         limit: 4
     });
+
+    const offers = data?.pages.flatMap((page) => page.data) ?? [];
 
     return (
         <View className="pb-5" onLayout={e => onLayout(e, index)}>

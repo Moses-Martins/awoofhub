@@ -32,7 +32,7 @@ export default function OffersScreen() {
     const { data, isFetching, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage, isError, error } = useOffers({
         search: q ?? "",
         category: category ?? "",
-        minRating: minRating ?? "",
+        minRating: Number(minRating) ?? 0,
         createdFrom: createdFrom ?? "",
         createdTo: createdTo ?? "",
         limit: 8,
