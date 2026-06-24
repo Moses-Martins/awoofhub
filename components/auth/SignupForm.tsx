@@ -1,7 +1,8 @@
 import { LoginFormProps } from '@/types/form-props';
 import { FileText, Lock, Mail, User } from 'lucide-react-native';
 import { Controller, useForm } from 'react-hook-form';
-import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import {Text, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { InputField } from '../form/InputField';
 
 
@@ -22,7 +23,8 @@ export default function SignupForm({onSuccess}: LoginFormProps) {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white p-6 pt-16">
+    <ScrollView className="flex-1 bg-white p-6 pt-16"
+      contentContainerClassName="flex-1 justify-center">
       <Text className="text-3xl font-bold text-slate-900 font-baloo mb-2">
         Create Account
       </Text>
