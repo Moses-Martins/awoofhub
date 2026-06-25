@@ -14,7 +14,7 @@ export const getTrendingOffers = async ({ page = 1, limit }: GetTrendingOffersOp
 };
 
 export const useTrendingOffers = ({ limit = 8 }: GetTrendingOffersOptions) => {
-    const { data, isFetchingNextPage, isLoading, isFetching, fetchNextPage, hasNextPage, isError, error } = useInfiniteQuery({
+    const { data, isFetchingNextPage, isLoading, isFetched, isFetching, fetchNextPage, hasNextPage, isError, error } = useInfiniteQuery({
         queryKey: ["trendingOffers", limit],
         queryFn: ({ pageParam = 1 }) => getTrendingOffers({ page: pageParam, limit }),
 
@@ -34,6 +34,7 @@ export const useTrendingOffers = ({ limit = 8 }: GetTrendingOffersOptions) => {
         isFetchingNextPage, 
         isLoading, 
         isFetching, 
+        isFetched,
         fetchNextPage, 
         hasNextPage, 
         isError, 

@@ -1,6 +1,5 @@
 import Dialog from '@/components/dialog/Dialog';
 import OfferInfiniteList from '@/components/offers/OfferInfiniteList';
-import OfferListSkeleton from '@/components/offers/OfferListSkeleton';
 import { useCategory } from '@/features/category/useCategory';
 import { useFilter } from "@/features/offers/useFilter";
 import { useOffers } from '@/features/offers/useOffers';
@@ -29,20 +28,16 @@ export default function OffersScreen() {
     const [showFromPicker, setShowFromPicker] = useState(false);
     const [showToPicker, setShowToPicker] = useState(false);
 
-    const { data, isFetching, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage, isError, error } = useOffers({
+    const { data, isFetching, isLoading, isFetched, isFetchingNextPage, fetchNextPage, hasNextPage } = useOffers({
         search: q ?? "",
         category: category ?? "",
-        minRating: Number(minRating) ?? 0,
+        minRating: Number(minRating ?? 0),
         createdFrom: createdFrom ?? "",
         createdTo: createdTo ?? "",
         limit: 8,
     });
 
     const allOffers = data?.pages.flatMap((page) => page.data) ?? [];
-
-    if (isCategoryFetching) {
-        return <OfferListSkeleton number={8} />
-    }
 
     return (
         <View className="flex-1 bg-white">
@@ -100,25 +95,16 @@ export default function OffersScreen() {
                 onCancel={() => setShowToPicker(false)}
             />
 
-
-
             <View className="flex-1 pt-4">
-                {isLoading && <OfferListSkeleton number={8} />}
-
-                {!isLoading && !isFetching && allOffers.length === 0 && (
-                    <Text className="text-gray-500 text-center">No offers available.</Text>
-                )}
-
-                {isError && <Text className="text-red-500 text-center">{error?.message}</Text>}
-
-                {!isLoading && allOffers.length > 0 &&
-                    <OfferInfiniteList
-                        offers={allOffers}
-                        hasNextPage={hasNextPage}
-                        fetchNextPage={fetchNextPage}
-                        isFetchingNextPage={isFetchingNextPage}
-                    />
-                }
+                <OfferInfiniteList
+                    offers={allOffers}
+                    hasNextPage={hasNextPage}
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                    isFetched={isFetched}
+                    fetchNextPage={fetchNextPage}
+                    isFetchingNextPage={isFetchingNextPage}
+                />
             </View>
             <Dialog actionSheetRef={actionSheetRef}>
                 <View className="p-4 gap-4">

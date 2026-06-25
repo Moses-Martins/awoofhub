@@ -1,47 +1,97 @@
 import { colors } from '@/styles/colors';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Foundation from '@expo/vector-icons/Foundation';
+import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Tabs } from 'expo-router';
+import { Platform, View } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false, 
-      }}>
+        headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopWidth: 1,
+          borderTopColor: '#E5E7EB',
+          height: 75,
+          paddingBottom: Platform.OS === 'ios' ? 28 : 10,
+          paddingTop: 5,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+        },
+      }}
+    >
+
       <Tabs.Screen
         name="(home)"
         options={{
           title: 'Home',
-          tabBarIcon: ({focused}) => (
-            <Foundation name="home" size={28} color={focused ? colors.primary : "gray"} />
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="home" size={24} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
-        name="message"
+        name="posts"
         options={{
-          title: 'Messages',
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome name="comments" size={26} color={focused ? colors.primary : "gray"} />
+          title: 'My posts',
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="list" size={26} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
-        name="notification"
+        name="create"
         options={{
-          title: 'Notifications',
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome name="bell" size={24} color={focused ? colors.primary : "gray"} /> 
+          title: '',
+          tabBarItemStyle: {
+        marginHorizontal: -10,
+      },
+          tabBarIcon: () => (
+            <View
+              style={{
+                backgroundColor: colors.primary,
+                width: 50,
+                height: 50,
+                borderRadius: 27,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: Platform.OS === 'ios' ? -15 : -25,
+                shadowColor: colors.primary,
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.3,
+                shadowRadius: 4,
+                elevation: 5, // Android shadow
+              }}
+            >
+              <FontAwesome5 name="plus" size={22} color="#FFFFFF"  />
+            </View>
           ),
         }}
       />
+
       <Tabs.Screen
         name="wishlist"
         options={{
           title: 'Wishlist',
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome name="heart" size={24} color={focused ? colors.primary : "gray"} />
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="heart" size={24} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="notification"
+        options={{
+          title: 'Notifications',
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="bell" size={24} color={color} />
           ),
         }}
       />

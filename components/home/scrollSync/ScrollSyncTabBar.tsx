@@ -6,12 +6,14 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import ExpiringOffers from '../ExpiringOffers';
+import TrendingOffers from '../TrendingOffers';
 import SectionItem from './SectionItem';
 import TabBar from './TabBar';
 
 export default function ScrollSyncTabBar() {
   const { data: categories = [], isFetching } = useCategory();
-  
+
   const tabs = categories.map(item => item.name);
 
   const heightRef = useRef<number[]>([]);
@@ -22,7 +24,7 @@ export default function ScrollSyncTabBar() {
 
   const onLayoutHandler = (event: LayoutChangeEvent, index: number) => {
     const { height } = event.nativeEvent.layout;
-    
+
     heightRef.current[index] = height;
 
     const measuredCount = heightRef.current.filter(h => h !== undefined).length;
@@ -49,11 +51,18 @@ export default function ScrollSyncTabBar() {
     }
   };
 
+  const listData = [
+    { type: 'tabbar', id: 'tabbar' },
+    ...categories,
+  ];
+
   const onScrollHandler = useAnimatedScrollHandler({
     onScroll: event => {
       const y = event.contentOffset.y;
+      const triggerPoint = y - 200;
+
       for (let i = 1; i < sectionYSv.value.length; i++) {
-        if (y < sectionYSv.value[i]) {
+        if (triggerPoint < sectionYSv.value[i]) {
           activeIndexSv.value = i - 1;
           break;
         }
@@ -73,22 +82,39 @@ export default function ScrollSyncTabBar() {
   }
 
   return (
-    <View className="flex-1 pt-8 bg-[#EEF2F6]">
-      <TabBar
-        tabs={tabs}
-        activeIndex={activeIndexSv}
-        scrollToIndex={scrollToIndex}
-        userDragged={userDragged}
-      />
+    <View className="flex-1 bg-[#EEF2F6]">
 
       <Animated.FlatList
         ref={sectionListRef}
-        data={categories} // Using dynamic API data here
-        renderItem={({ item, index }) => (
-          <SectionItem item={item} onLayout={onLayoutHandler} index={index} />
-        )}
+        data={listData}
+        ListHeaderComponent={
+          <>
+            <TrendingOffers />
+            <ExpiringOffers />
+          </>
+        }
+        renderItem={({ item, index }) => {
+          if ('type' in item && item.type === 'tabbar') {
+            return (
+              <TabBar
+                tabs={tabs}
+                activeIndex={activeIndexSv}
+                scrollToIndex={scrollToIndex}
+                userDragged={userDragged}
+              />
+            );
+          }
+          return (
+            <SectionItem
+              item={item}
+              onLayout={onLayoutHandler}
+              index={index - 1}
+            />
+          );
+        }}
         keyExtractor={item => item.id.toString()}
         onScroll={onScrollHandler}
+        stickyHeaderIndices={[1]}
         showsVerticalScrollIndicator={false}
         contentContainerClassName="pb-12"
       />

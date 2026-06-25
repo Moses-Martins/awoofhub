@@ -14,7 +14,7 @@ export const getExpiringOffers = async ({ page = 1, limit }: GetExpiringOffersOp
 };
 
 export const useExpiringOffers = ({ limit = 8 }: GetExpiringOffersOptions) => {
-    const {  data, isFetchingNextPage, isLoading, isFetching, fetchNextPage, hasNextPage, isError, error } = useInfiniteQuery({
+    const {  data, isFetchingNextPage, isFetched, isLoading, isFetching, fetchNextPage, hasNextPage, isError, error } = useInfiniteQuery({
         queryKey: ["expiringOffers", limit],
         queryFn: ({ pageParam = 1 }) => getExpiringOffers({ page: pageParam, limit }),
 
@@ -34,6 +34,7 @@ export const useExpiringOffers = ({ limit = 8 }: GetExpiringOffersOptions) => {
         isFetchingNextPage, 
         isLoading, 
         isFetching, 
+        isFetched,
         fetchNextPage, 
         hasNextPage, 
         isError, 

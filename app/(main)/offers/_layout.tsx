@@ -9,6 +9,8 @@ export default function OfferLayout() {
     <Protected>
       <Stack>
         <Stack.Screen name="[id]" options={{ headerTitle: "Offer Detail" }} />
+        <Stack.Screen name="trending" options={{ headerTitle: "Trending" }} />
+        <Stack.Screen name="expiring" options={{ headerTitle: "Expiring" }} />
         <Stack.Screen
           name="index"
           options={{

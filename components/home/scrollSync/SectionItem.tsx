@@ -1,4 +1,3 @@
-import Loading from '@/components/loading/Loading';
 import OfferList from '@/components/offers/OfferList';
 import { useOffers } from '@/features/offers/useOffers';
 import { Feather } from '@expo/vector-icons';
@@ -13,7 +12,7 @@ interface Props {
 
 export default function SectionItem({ item, onLayout, index }: Props) {
 
-    const { data, isFetching } = useOffers({
+    const { data, isLoading, isFetched, isFetching } = useOffers({
         search: "",
         category: item.slug ?? "",
         minRating: 0,
@@ -42,11 +41,7 @@ export default function SectionItem({ item, onLayout, index }: Props) {
                 </Link>
             </View>
 
-            {isFetching && offers.length === 0 ? (
-                <View className="p-6 items-center"><Loading /></View>
-            ) : (
-                <OfferList offers={offers} />
-            )}
+            <OfferList offers={offers} isLoading={isLoading} isFetched={isFetched} isFetching={isFetching} />
 
         </View>
     );

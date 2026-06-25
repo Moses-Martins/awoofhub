@@ -93,7 +93,7 @@ export default function TabBar({
 
   return (
     <View
-      className="mb-2 bg-white px-2 py-3 overflow-hidden shadow"
+      className="my-2 bg-white px-2 py-3 overflow-hidden shadow"
       style={{
         shadowColor: '#0a84ff30',
         shadowOffset: { width: 0, height: 8 },
