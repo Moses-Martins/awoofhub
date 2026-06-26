@@ -1,9 +1,10 @@
 import YellowClock from "@/assets/images/yellowClock.svg";
+import Text from '@/components/common/Text';
 import { useExpiringOffers } from "@/features/offers/useExpiringOffers";
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router"; // or useNavigation()
+import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 import OfferList from "../offers/OfferList";
 
 const START_SECONDS = 3 * 24 * 60 * 60; // 3d 0h 0m 0s = 259,200s
@@ -41,13 +42,12 @@ export default function ExpiringOffers() {
     const seconds = secondsLeft % 60;
 
     return (
-        <View className="flex-1 pt-5 bg-gray-50">
+        <View className="flex-1 mt-5">
             <View className="mb-3 flex-row items-center justify-between bg-primary px-3 py-2">
                 <View>
                     <View className="flex-row items-center gap-2">
                         <YellowClock width={20} height={20} />
-
-                        <Text className="text-base font-semibold text-white">
+                        <Text type="headerBold" className="text-base font-semibold text-white">
                             Expiring soon
                         </Text>
                     </View>
@@ -62,7 +62,7 @@ export default function ExpiringOffers() {
 
                 <Link href="/offers/expiring" asChild>
                     <Pressable className="flex-row items-center gap-1">
-                        <Text className="font-baloo text-sm font-medium text-white">
+                        <Text type="header" className="text-sm text-white">
                             View all
                         </Text>
 

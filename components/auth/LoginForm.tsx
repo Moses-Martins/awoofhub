@@ -4,7 +4,7 @@ import { LoginFormProps } from "@/types/form-props";
 import { Lock, Mail } from "lucide-react-native";
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from "react-native";
-import { InputField } from "../form/InputField";
+import { InputField } from "../common/InputField";
 
 export default function LoginForm({ onSuccess }: LoginFormProps) {
     const login = useLogin({ onSuccess });

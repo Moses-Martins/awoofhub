@@ -1,8 +1,9 @@
 import YellowFlame from "@/assets/images/yellowFlame.svg";
+import Text from '@/components/common/Text';
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router"; // or useNavigation()
+import { Link } from "expo-router";
 import { useMemo } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
 
 import { useTrendingOffers } from "@/features/offers/useTrendingOffers";
 import OfferList from "../offers/OfferList";
@@ -18,22 +19,20 @@ export default function TrendingOffers() {
         [data]
     );
 
-
-
     return (
-        <View className="flex-1 pt-5 bg-gray-50">
+        <View className="flex-1 mt-5 mb-3">
             <View className="bg-primary flex-row items-center justify-between px-3 py-2 mb-3">
                 <View className="flex-row items-center gap-2">
                     <YellowFlame width={20} height={20} />
 
-                    <Text className="text-base font-semibold text-white md:text-xl">
+                    <Text type="headerBold" className="text-base text-white">
                         Trending now
                     </Text>
                 </View>
 
                 <Link href="/offers/trending" asChild>
                     <Pressable className="flex-row items-center gap-1">
-                        <Text className="font-medium text-sm text-white">
+                        <Text type="header" className="text-sm text-white">
                             View all
                         </Text>
 

@@ -1,8 +1,11 @@
 import { useLogout } from "@/features/auth/useLogout";
 import { useUser } from "@/features/user/useUser";
+import { capitalizeFirstLetter } from "@/utils/truncate";
 import { Href, useNavigationContainerRef, useRouter } from "expo-router";
 import { DrawerActions } from "expo-router/build/react-navigation";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { CircleHelp, LogOut, Mail, User } from "lucide-react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+
 
 export default function CustomDrawerContent() {
     const router = useRouter();
@@ -26,31 +29,80 @@ export default function CustomDrawerContent() {
     });
 
     return (
-        <ScrollView
-            contentContainerStyle={{
-                flexGrow: 1,
-                paddingTop: 60,
-                paddingBottom: 20,
-            }}
-            className="bg-white"
-        >
-            <Text className="text-xl font-bold mx-5 mb-5">
-                Welcome!
-            </Text>
+        <>
+            {user && (
+                <ScrollView
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                        paddingTop: 60,
+                        paddingBottom: 20,
+                    }}
+                    className="bg-white"
+                >
+                    {/* User Avatar Section */}
+                    <View className="items-center my-7">
+                        {user.profileImageUrl ? (
+                            <Image
+                                source={{ uri: user.profileImageUrl }}
+                                className="w-20 h-20 rounded-full"
+                            />
+                        ) : (
+                            <View className="w-20 h-20 rounded-full bg-green-500 items-center justify-center">
+                                <Text className="text-white text-2xl font-baloo-bold">
+                                    {capitalizeFirstLetter(user.name)}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
 
-            <View className="gap-4 px-5">
-                <Pressable onPress={() => navigate(`/profile/${user.id}`)} className="py-3">
-                    <Text className="text-lg">Profile</Text>
-                </Pressable>
+                    {/* Menu Items */}
+                    <View>
+                        {[
+                            {
+                                label: "Profile",
+                                icon: User,
+                                action: () => navigate(`/profile/${user.id}`),
+                            },
+                            {
+                                label: "Messages",
+                                icon: Mail,
+                                action: () => navigate("/"),
+                            },
+                            {
+                                label: "Help & Support",
+                                icon: CircleHelp,
+                                action: () => navigate(`/profile/${user.id}`),
+                            },
+                        ].map((item) => {
+                            const Icon = item.icon;
 
-                <Pressable onPress={() => navigate("/")} className="py-3 active:opacity-60">
-                    <Text className="text-lg">Help & Support</Text>
-                </Pressable>
+                            return (
+                                <Pressable
+                                    key={item.label}
+                                    onPress={item.action} // Corrected action trigger
+                                    className="flex-row items-center gap-4 px-6 py-4 border-b border-gray-100 active:bg-gray-50"
+                                >
+                                    <Icon size={22} color="#FF5A1F" />
+                                    <Text className="text-lg font-mont">
+                                        {item.label}
+                                    </Text>
+                                </Pressable>
+                            );
+                        })}
 
-                <Pressable onPress={() => logout()} className="py-3 active:opacity-60">
-                    <Text className="text-lg text-red-500">Logout</Text>
-                </Pressable>
-            </View>
-        </ScrollView>
+                        {/* Logout Option */}
+                        <Pressable 
+                            onPress={() => logout()} 
+                            className="flex-row items-center gap-4 px-6 py-4 active:bg-gray-50"
+                        >
+                            <LogOut size={22} color="#FF5A1F" />
+                            <Text className="text-lg font-mont text-primary">
+                                Logout
+                            </Text>
+                        </Pressable>
+                    </View>
+                </ScrollView>
+            )}
+        </>
     );
 }

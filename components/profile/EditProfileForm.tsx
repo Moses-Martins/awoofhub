@@ -10,8 +10,8 @@ import { Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, ImageBackground, Pressable, Text, View } from "react-native";
 
 import { EditProfileFormProps } from "@/types/form-props";
-import { GoogleInputField } from "../form/AutoComplete";
-import { InputField } from "../form/InputField";
+import { GoogleInputField } from "../common/AutoComplete";
+import { InputField } from "../common/InputField";
 
 export const EditProfileForm = ({ onSuccess }: EditProfileFormProps) => {
     const { data: currentUser } = useUser();

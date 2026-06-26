@@ -89,8 +89,8 @@ export default function ScrollSyncTabBar() {
         data={listData}
         ListHeaderComponent={
           <>
-            <TrendingOffers />
             <ExpiringOffers />
+            <TrendingOffers />
           </>
         }
         renderItem={({ item, index }) => {
