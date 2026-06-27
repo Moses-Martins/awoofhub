@@ -1,10 +1,11 @@
+import Text from '@/components/common/Text';
 import { useLogout } from "@/features/auth/useLogout";
 import { useUser } from "@/features/user/useUser";
-import { capitalizeFirstLetter } from "@/utils/truncate";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Href, useNavigationContainerRef, useRouter } from "expo-router";
 import { DrawerActions } from "expo-router/build/react-navigation";
 import { CircleHelp, LogOut, Mail, User } from "lucide-react-native";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, View } from "react-native";
 
 
 export default function CustomDrawerContent() {
@@ -39,23 +40,21 @@ export default function CustomDrawerContent() {
                     }}
                     className="bg-white"
                 >
-                    {/* User Avatar Section */}
                     <View className="items-center my-7">
                         {user.profileImageUrl ? (
                             <Image
                                 source={{ uri: user.profileImageUrl }}
-                                className="w-20 h-20 rounded-full"
+                                className="w-50 h-50 rounded-full"
                             />
                         ) : (
-                            <View className="w-20 h-20 rounded-full bg-green-500 items-center justify-center">
-                                <Text className="text-white text-2xl font-baloo-bold">
-                                    {capitalizeFirstLetter(user.name)}
-                                </Text>
+                            <View className="w-50 h-50 bg-gray-300 justify-center items-center rounded-full">
+                                <FontAwesome name="user" size={24} color="gray" />
                             </View>
                         )}
                     </View>
 
-                    {/* Menu Items */}
+                    <Text type="headerBold" className="px-6 py-4 text-lg">{user.name}</Text>
+
                     <View>
                         {[
                             {
@@ -66,12 +65,12 @@ export default function CustomDrawerContent() {
                             {
                                 label: "Messages",
                                 icon: Mail,
-                                action: () => navigate("/"),
+                                action: () => navigate("/message"),
                             },
                             {
                                 label: "Help & Support",
                                 icon: CircleHelp,
-                                action: () => navigate(`/profile/${user.id}`),
+                                action: () => navigate(`/message`),
                             },
                         ].map((item) => {
                             const Icon = item.icon;
@@ -91,8 +90,8 @@ export default function CustomDrawerContent() {
                         })}
 
                         {/* Logout Option */}
-                        <Pressable 
-                            onPress={() => logout()} 
+                        <Pressable
+                            onPress={() => logout()}
                             className="flex-row items-center gap-4 px-6 py-4 active:bg-gray-50"
                         >
                             <LogOut size={22} color="#FF5A1F" />

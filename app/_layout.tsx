@@ -1,14 +1,14 @@
+import AppProvider from '@/providers/app-provider';
+import { FONTS } from '@/styles/fonts';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
-import "../global.css";
-
-import AppProvider from '@/providers/app-provider';
-import { FONTS } from '@/styles/fonts';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import "../global.css";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,12 +48,14 @@ function RootLayoutNav() {
   return (
     <AppProvider>
       <SafeAreaProvider>
+         <GestureHandlerRootView>
           <PaperProvider>
             <Stack>
               <Stack.Screen name="(main)" options={{ headerShown: false }} />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             </Stack>
           </PaperProvider>
+          </GestureHandlerRootView>
       </SafeAreaProvider>
     </AppProvider>
   );
