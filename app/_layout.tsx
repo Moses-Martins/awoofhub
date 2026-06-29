@@ -48,14 +48,14 @@ function RootLayoutNav() {
   return (
     <AppProvider>
       <SafeAreaProvider>
-         <GestureHandlerRootView>
-          <PaperProvider>
-            <Stack>
-              <Stack.Screen name="(main)" options={{ headerShown: false }} />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            </Stack>
-          </PaperProvider>
-          </GestureHandlerRootView>
+        <GestureHandlerRootView>
+            <PaperProvider>
+              <Stack>
+                <Stack.Screen name="(main)" options={{ headerShown: false }} />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              </Stack>
+            </PaperProvider>
+        </GestureHandlerRootView>
       </SafeAreaProvider>
     </AppProvider>
   );

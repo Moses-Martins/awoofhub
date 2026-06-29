@@ -1,14 +1,17 @@
-import Protected from "@/components/protected/Protected";
+import { ChatWrapper } from "@/components/chat/ChatWrapper";
+import { ChatProvider } from "@/context/ChatContext";
 import { Stack } from "expo-router";
 
-
 export default function MessageLayout() {
-  
+
   return (
-    <Protected>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerTitle: "Message" }} />
-      </Stack>
-    </Protected>
+    <ChatWrapper>
+      <ChatProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="[cid]" options={{ headerShown: false }} />
+        </Stack>
+      </ChatProvider>
+    </ChatWrapper>
   );
 }
