@@ -111,7 +111,7 @@ export default function ProfileScreen() {
                         if (isFetching) {
                             return (
                                 <View style={{ paddingTop: HEADER_SPACE }}>
-                                    <OfferListSkeleton number={8} />
+                                    <OfferListSkeleton />
                                 </View>
                             );
                         }

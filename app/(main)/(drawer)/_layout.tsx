@@ -8,7 +8,7 @@ export default function DrawerLayout() {
       drawerContent={CustomDrawerContent}
       screenOptions={{
         headerShown: false,
-        drawerStyle: { width: "50%" },
+        drawerStyle: { width: "75%" },
         drawerItemStyle: { display: "none" }, 
       }}
     >

@@ -1,6 +1,5 @@
-import React from 'react';
+import { Heart } from 'lucide-react-native';
 import { TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useToggleWishlist } from "../../features/wishlist/useToggleWishlist";
 
 
@@ -21,10 +20,11 @@ export default function WishlistButton({ offerId, size, position = "" }: Props) 
       className={position}
       activeOpacity={0.7}
     >
-      <MaterialIcons
-        name={isFavorite ? "favorite" : "favorite-border"}
+      <Heart
         size={size}
-        color={isFavorite ? "#EF4444" : "#59585880"}
+        color={isFavorite ? "#EF4444" : "#59585880"} 
+        fill={isFavorite ? "#EF4444" : "transparent"} 
+        strokeWidth={2} 
       />
     </TouchableOpacity>
   );

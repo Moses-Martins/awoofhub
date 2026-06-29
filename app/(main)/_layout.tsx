@@ -13,7 +13,6 @@ export default function MainLayout() {
         <Stack>
           <Stack.Screen name="offers" options={{ headerShown: false }} />
           <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
           <Stack.Screen name="profile" options={{ headerShown: false }} />
         </Stack>
       </SearchProvider>

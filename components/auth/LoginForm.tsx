@@ -15,8 +15,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Checkbox } from "react-native-paper";
-import LoadingModal from "@/components/modal/LoginModal";
-import { InputField } from "../form/InputField";
+import LoadingModal from "@/components/modal/LoadingModal";
+import { InputField } from "../common/InputField";
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function LoginForm({ onSuccess }: LoginFormProps) {
@@ -42,7 +42,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
   return (
     <>
       {/* ── Loading modal ─────────────────────────────────────────────────── */}
-      <LoadingModal visible={login.isPending} message="Logging you in..." />
+      <LoadingModal visible={login.isPending} />
 
       <SafeAreaView className="flex-1 bg-[#F15A22] px-5">
         <KeyboardAvoidingView

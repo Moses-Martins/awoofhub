@@ -2,27 +2,38 @@ import { colors } from '@/styles/colors';
 import { Offer } from '@/types/offer';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import OfferCard from './OfferCard';
+import OfferListSkeleton from './OfferListSkeleton';
 
 
 interface Props {
     offers: Offer[];
     isFetchingNextPage: boolean;
+    isFetching: boolean
+    isFetched: boolean;
+    isLoading: boolean;
     hasNextPage: boolean;
     fetchNextPage: () => void;
 }
 
-export default function OfferInfiniteList({ offers, hasNextPage, fetchNextPage, isFetchingNextPage }: Props) {
+export default function OfferInfiniteList({ offers, hasNextPage, isLoading, isFetched, isFetching, fetchNextPage, isFetchingNextPage }: Props) {
+
+    const listData = isLoading ? Array.from({ length: 8 }, (_, i) => ({ id: `skeleton-${i}` } as Offer)) : offers;
 
     return (
         <FlatList
             columnWrapperClassName="gap-3"
             contentContainerClassName="gap-3 px-3"
-            data={offers}
+            data={listData}
             numColumns={2}
-            renderItem={({ item }) => (<OfferCard offer={item} />)}
+            renderItem={({ item }) => {
+                if (isLoading) {
+                    return <OfferListSkeleton />;
+                }
+                return <OfferCard offer={item} />;
+            }}
             keyExtractor={item => item.id ?? ''}
             onEndReached={() => {
-                if (hasNextPage && !isFetchingNextPage) {
+                if (hasNextPage && !isFetchingNextPage && !isLoading) {
                     fetchNextPage();
                 }
             }}
@@ -38,6 +49,19 @@ export default function OfferInfiniteList({ offers, hasNextPage, fetchNextPage, 
                     )}
                 </View>
             )}
+
+            ListEmptyComponent={() => {
+                if (!isFetching && isFetched && offers.length === 0) {
+                    return (
+                        <View className="pt-5">
+                            <Text className="text-gray-500 text-center">
+                                No offers available.
+                            </Text>
+                        </View>
+                    );
+                }
+                return null;
+            }}
         />
     );
 };

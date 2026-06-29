@@ -26,14 +26,16 @@ export interface Offer {
   title: string;
   description: string;
   imageUrl: string;
-  termsAndConditions: string;
   value: string;
-  dealUrl: string;
+  dealType: 'cashback' | 'freebie' | 'discount' | 'bogo' | 'promo_code' | 'free_trial' | 'free_delivery',
+  externalLink: string;
   couponCode?: string;
-  business: {
+  contributor: {
     id: string;
     name: string;
-    profileImageUrl: string | null;
+    username: string;
+    profileImageUrl?: string;
+    createdAt: string;
   };
   category: {
     id: string;
@@ -41,13 +43,15 @@ export interface Offer {
     slug: string;
   };
   location: string;
-  status: "pending" | "approved" | "rejected";
+  brandName: string;
+  status: "pending" | "approved" | "rejected" | "suspended";
   createdAt: string;
   endDate: string;
-  avgRating: number,
-  reviewCount: number,
-  ratingDistribution: {}
-};
+  avgRating: number;
+  reviewCount: number;
+  clickCount: number;
+  ratingDistribution: {};
+}
 
 export interface Stats {
   totalAds: number;

@@ -1,9 +1,8 @@
 import { LoginFormProps } from '@/types/form-props';
 import { FileText, Lock, Mail, User } from 'lucide-react-native';
 import { Controller, useForm } from 'react-hook-form';
-import {Text, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { InputField } from '../form/InputField';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { InputField } from '../common/InputField';
 
 
 export default function SignupForm({onSuccess}: LoginFormProps) {
