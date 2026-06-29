@@ -14,14 +14,13 @@ import {
   Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InputField } from "../form/InputField";
 import { Checkbox } from "react-native-paper";
 import LoadingModal from "@/components/modal/LoginModal";
-import ErrorModal from "@/components/modal/ErrorModal";
+import { InputField } from "../form/InputField";
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function LoginForm({ onSuccess }: LoginFormProps) {
-  const login = useLogin({ onSuccess });
+  const login = useLogin({ onSuccess});
   const [rememberMe, setRememberMe] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -44,17 +43,6 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     <>
       {/* ── Loading modal ─────────────────────────────────────────────────── */}
       <LoadingModal visible={login.isPending} message="Logging you in..." />
-
-      <ErrorModal
-        visible={errorVisible}
-        title="Couldn't log into your account!"
-        message={errorMessage}
-        onDismiss={() => setErrorVisible(false)}
-        onRetry={() => {
-          setErrorVisible(false);
-          handleSubmit(onSubmit)();
-        }}
-      />
 
       <SafeAreaView className="flex-1 bg-[#F15A22] px-5">
         <KeyboardAvoidingView
